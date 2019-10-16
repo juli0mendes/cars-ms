@@ -30,6 +30,18 @@ public class FluxCarService {
 		return this.carRepository.findById(id);
 	}
 	
+	/**
+	 * Cria um stream de eventos de um determinado dado.
+	 * <p> 
+	 * Note que ele espera receber um ID e, então, no intervalo de um segundo irá disparar um evento <br>
+	 * do conteúdo daquele dado com o respectivo ID. <br>
+	 * <p>
+	 * Em seguida o método ZIP da classe Flux se encarrega de aguardar até que os dados (os eventos) <br>
+	 * estejam prontos e os envia em um response respeitando o intervalo definido.
+	 * <p>
+	 * @param id
+	 * @return
+	 */
 	public Flux<CarEvents> streams(String id) {
 		
 		return this.findById(id).flatMapMany(car -> {
