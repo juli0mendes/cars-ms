@@ -4,6 +4,8 @@ import java.time.Duration;
 import java.util.Date;
 import java.util.stream.Stream;
 
+import javax.validation.constraints.NotNull;
+
 import org.springframework.stereotype.Service;
 
 import br.com.juli0mendes.cars.events.CarEvents;
@@ -53,5 +55,9 @@ public class FluxCarService {
 			
 			return Flux.zip(interval, events).map(Tuple2::getT2);
 		});
+	}
+
+	public Mono<Car> create(@NotNull Car car) {
+		return this.carRepository.save(car);
 	}
 }

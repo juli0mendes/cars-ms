@@ -1,8 +1,12 @@
 package br.com.juli0mendes.cars.controller;
 
+import javax.validation.constraints.NotNull;
+
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.juli0mendes.cars.events.CarEvents;
@@ -34,5 +38,10 @@ public class CarController {
 	@GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE, value = "/{id}/events")
 	public Flux<CarEvents> eventsOfStreams(@PathVariable("id") String id) {
 		return this.fluxCarService.streams(id);
+	}
+	
+	@PostMapping
+	public Mono<Car> create(@RequestBody @NotNull Car car) {
+		return this.fluxCarService.create(car);
 	}
 }
